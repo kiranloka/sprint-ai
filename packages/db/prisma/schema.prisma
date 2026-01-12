@@ -14,5 +14,91 @@ model User {
   hashedPassword String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  campaignCommunications CampaignCommunication[]
+}
+
+enum LeadStatus {
+  NEW
+  VERIFIED
+  QUALIFIED
+  DISQUALIFIED
+}
+
+enum VerificationStatus {
+  VALID
+  INVALID
+  UNKNOWN
+}
+
+model Lead {
+  id                String             @id @default(cuid())
+  email             String             @unique
+  firstName         String?
+  lastName          String?
+  company           String?
+  title             String?
+  industry          String?
+  leadScore         Int                @default(0)
+  status            LeadStatus         @default(NEW)
+  verificationStatus VerificationStatus @default(UNKNOWN)
+  enrichmentData    Json?
   
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model EmailTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  subject     String?
+  contentJson Json
+  contentHtml String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  campaigns   Campaign[]
+}
+
+model Campaign {
+  id             String   @id @default(cuid())
+  name           String
+  subject        String
+  templateId     String
+  template       EmailTemplate @relation(fields: [templateId], references: [id])
+  status         CampaignStatus @default(DRAFT)
+  scheduledAt    DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  communications CampaignCommunication[]
+}
+
+model CampaignCommunication {
+  id         String   @id @default(cuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  status     CommunicationStatus @default(PENDING)
+  openedAt   DateTime?
+  clickedAt  DateTime?
+  sentAt     DateTime?
+  messageId  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([campaignId, userId])
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  COMPLETED
+  FAILED
+}
+
+enum CommunicationStatus {
+  PENDING
+  SENT
+  FAILED
+  BOUNCED
 }

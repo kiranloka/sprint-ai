@@ -23,10 +23,10 @@ export function AnalyticsKpiRow({ metrics }: AnalyticsKpiRowProps) {
       {metrics.map((metric) => (
         <Card
           key={metric.label}
-          className="cursor-pointer hover:shadow-md transition-all border-none shadow-sm bg-card/50 hover:bg-card"
+          className="cursor-pointer hover:shadow-md transition-all border-none shadow-sm bg-background text-primary hover:card"
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-muted-primary">
               {metric.label}
             </CardTitle>
             <metric.icon className={cn("h-4 w-4", metric.color)} />

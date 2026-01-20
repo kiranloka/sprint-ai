@@ -25,7 +25,7 @@ interface AnalyticsFunnelProps {
 
 export function AnalyticsFunnel({ stages }: AnalyticsFunnelProps) {
   return (
-    <Card className="border-none shadow-sm bg-card/50">
+    <Card className="border-none shadow-sm bg-background">
       <CardContent className="p-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
           {stages.map((stage, index) => (
@@ -34,9 +34,9 @@ export function AnalyticsFunnel({ stages }: AnalyticsFunnelProps) {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex flex-col p-4 rounded-xl hover:bg-accent/50 transition-colors cursor-help border border-transparent hover:border-border">
+                      <div className="flex flex-col p-4 rounded-xl bg-background hover:bg-secondary/50 transition-colors cursor-help border border-transparent hover:border-border">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                          <span className="text-sm font-medium text-muted-background uppercase tracking-wider text-[10px]">
                             {stage.label}
                           </span>
                           <InfoIcon className="h-3 w-3 text-muted-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity" />
